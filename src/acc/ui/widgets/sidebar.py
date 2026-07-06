@@ -2,13 +2,15 @@ from __future__ import annotations
 
 from enum import IntEnum
 
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
-    QListWidget,
-    QListWidgetItem,
+    QLabel, 
     QVBoxLayout,
     QWidget,
 )
+
+from acc.resources.icons import icon
+from acc.ui.widgets.navigation_button import NavigationButton
 
 
 class Page(IntEnum):
@@ -23,9 +25,7 @@ class Page(IntEnum):
 
 
 class Sidebar(QWidget):
-    """
-    Left navigation panel.
-    """
+    """Application sidebar."""
 
     page_changed = Signal(int)
 
@@ -34,30 +34,63 @@ class Sidebar(QWidget):
 
         self.setFixedWidth(230)
 
-        self.menu = QListWidget()
-        self.menu.setSpacing(4)
-        self.menu.setAlternatingRowColors(False)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setSpacing(8)
+        title = QLabel("Android Control Center")
+        title.setObjectName("sidebarTitle")
+
+        layout.addWidget(title)
+        layout.addSpacing(16)
+
+
+        self.buttons = []
 
         pages = [
-            "🏠 Dashboard",
-            "📱 Devices",
-            "📂 Files",
-            "📦 Apps",
-            "🖥 Screen",
-            "📷 Camera",
-            "💻 Terminal",
-            "⚙ Settings",
+            ("dashboard", "Dashboard"),
+            ("devices", "Devices"),
+            ("files", "Files"),
+            ("apps", "Apps"),
+            ("screen", "Screen"),
+            ("camera", "Camera"),
+            ("terminal", "Terminal"),
         ]
 
-        for page in pages:
-            QListWidgetItem(page, self.menu)
+        for index, (icon_name, title) in enumerate(pages):
 
-        self.menu.setCurrentRow(Page.DASHBOARD)
+            button = NavigationButton(
+                title,
+                icon(icon_name),
+                index,
+            )
 
-        self.menu.currentRowChanged.connect(
-            self.page_changed.emit
+            button.clicked_page.connect(self.change_page)
+
+            self.buttons.append(button)
+
+            layout.addWidget(button)
+
+        layout.addStretch()
+
+        settings = NavigationButton(
+            "Settings",
+            icon("settings"),
+            Page.SETTINGS,
         )
 
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(8, 8, 8, 8)
-        layout.addWidget(self.menu)
+        settings.clicked_page.connect(self.change_page)
+
+        self.buttons.append(settings)
+
+        layout.addWidget(settings)
+
+        self.buttons[0].setChecked(True)
+
+    def change_page(self, index: int) -> None:
+
+        for button in self.buttons:
+            button.setChecked(False)
+
+        self.buttons[index].setChecked(True)
+
+        self.page_changed.emit(index)

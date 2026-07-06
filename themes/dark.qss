@@ -1,19 +1,173 @@
+/* ==========================================================
+   Android Control Center - Dark Theme
+   Version: 0.2
+   ========================================================== */
+
 QMainWindow {
     background-color: #1E1E1E;
+    color: white;
 }
 
 QWidget {
     background-color: #1E1E1E;
     color: white;
-    font-size: 10pt;
+    font-size: 13px;
 }
+
+
+/* ==========================================================
+   Header
+   ========================================================== */
+
+Header {
+    background-color: #252526;
+    border-bottom: 1px solid #333333;
+}
+
+
+/* ==========================================================
+   Sidebar
+   ========================================================== */
+
+QListWidget {
+    background-color: #252526;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+QListWidget::item {
+    padding: 14px 16px;
+    margin: 3px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+QListWidget::item:selected {
+    background-color: #007ACC;
+    border-left: 4px solid #4FC3F7
+}
+
+QListWidget::item:hover {
+    background-color: #323233;
+}
+
+
+/* ==========================================================
+   Buttons
+   ========================================================== */
+
+QPushButton {
+    background-color: #323233;
+    border: 1px solid #444444;
+    border-radius: 8px;
+    padding: 6px 16px;
+}
+
+QPushButton:hover {
+    background-color: #3D3D3D;
+}
+
+QPushButton:pressed {
+    background-color: #007ACC;
+}
+
+
+/* ==========================================================
+   Labels
+   ========================================================== */
+
+QLabel {
+    color: white;
+}
+
+
+/* ==========================================================
+   Cards
+   ========================================================== */
+
+QFrame#card {
+    background-color: #2B2B2B;
+    border: 1px solid #3A3A3A;
+    border-radius: 12px;
+}
+
+
+/* ==========================================================
+   Status Bar
+   ========================================================== */
 
 QStatusBar {
-    background: #252526;
+    background-color: #252526;
+    border-top: 1px solid #333333;
 }
 
-QToolBar {
-    background: #252526;
-    spacing: 6px;
+
+/* ==========================================================
+   Card
+   ========================================================== */
+
+QLabel#cardIcon {
+    font-size: 30px;
+}
+
+QLabel#cardTitle {
+    color: #AAAAAA;
+    font-size: 12px;
+}
+
+QLabel#cardValue {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+QLabel#cardSubtitle {
+    color: #888888;
+    font-size: 11px;
+}
+
+QLabel#sectionTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+
+/* ==========================================================
+   Navigation Button
+   ========================================================== */
+
+NavigationButton {
+    background: transparent;
     border: none;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 14px;
+    color: white;
+}
+
+NavigationButton:hover {
+    background: #323233;
+}
+
+NavigationButton:checked {
+    background: #007ACC;
+}
+
+NavigationButton:checked:hover {
+    background: #0A84D0;
+}
+
+
+/* ==========================================================
+   Sidebar Title
+   ========================================================== */
+
+QLabel#sidebarTitle {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 6px;
+    color: white;
 }
