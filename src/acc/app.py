@@ -6,6 +6,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from acc.ui.main_window import MainWindow
+from acc.ui.theme import apply_theme 
 
 
 def configure_logging() -> None:
@@ -23,6 +24,8 @@ def run() -> None:
     configure_logging()
 
     app = QApplication(sys.argv)
+
+    apply_theme(app)
 
     window = MainWindow()
     window.show()

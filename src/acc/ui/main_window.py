@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
-    QLabel,
     QMainWindow,
+    QStackedWidget,
     QStatusBar,
-    QToolBar,
-    QVBoxLayout,
-    QWidget,
 )
+
+from acc.ui.pages.home_page import HomePage
+from acc.ui.pages.devices_page import DevicesPage
 
 
 class MainWindow(QMainWindow):
@@ -20,28 +19,16 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Android Control Center")
         self.resize(1400, 850)
 
-        self._create_toolbar()
-        self._create_statusbar()
-        self._create_ui()
+        self._stack = QStackedWidget()
 
-    def _create_toolbar(self) -> None:
-        toolbar = QToolBar("Main Toolbar")
-        toolbar.setMovable(False)
-        self.addToolBar(toolbar)
+        self.home_page = HomePage()
+        self.devices_page = DevicesPage()
 
-    def _create_statusbar(self) -> None:
+        self._stack.addWidget(self.home_page)
+        self._stack.addWidget(self.devices_page)
+
+        self.setCentralWidget(self._stack)
+
         status = QStatusBar()
         status.showMessage("Ready")
         self.setStatusBar(status)
-
-    def _create_ui(self) -> None:
-        central = QWidget()
-
-        layout = QVBoxLayout(central)
-
-        label = QLabel("Android Control Center")
-        label.setAlignment(Qt.AlignCenter)
-
-        layout.addWidget(label)
-
-        self.setCentralWidget(central)
