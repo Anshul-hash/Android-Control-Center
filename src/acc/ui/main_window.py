@@ -1,48 +1,33 @@
 from __future__ import annotations
 
 from PySide6.QtWidgets import (
-    QHBoxLayout,
     QMainWindow,
     QStackedWidget,
     QStatusBar,
-    QWidget,
 )
 
 from acc.ui.pages.dashboard_page import DashboardPage
 from acc.ui.pages.devices_page import DevicesPage
-from acc.ui.widgets.sidebar import Sidebar
 
 
 class MainWindow(QMainWindow):
+    """Main application window."""
 
     def __init__(self) -> None:
         super().__init__()
 
         self.setWindowTitle("Android Control Center")
-        self.resize(1450, 900)
+        self.resize(1400, 850)
 
-        self.sidebar = Sidebar()
+        self.pages = QStackedWidget()
 
-        self.stack = QStackedWidget()
+        self.dashboard_page = DashboardPage()
+        self.devices_page = DevicesPage()
 
-        self.dashboard = DashboardPage()
-        self.devices = DevicesPage()
+        self.pages.addWidget(self.dashboard_page)
+        self.pages.addWidget(self.devices_page)
 
-        self.stack.addWidget(self.dashboard)
-        self.stack.addWidget(self.devices)
-
-        self.sidebar.page_changed.connect(self.stack.setCurrentIndex)
-
-        central = QWidget()
-
-        layout = QHBoxLayout(central)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-
-        layout.addWidget(self.sidebar)
-        layout.addWidget(self.stack)
-
-        self.setCentralWidget(central)
+        self.setCentralWidget(self.pages)
 
         status = QStatusBar()
         status.showMessage("Ready")

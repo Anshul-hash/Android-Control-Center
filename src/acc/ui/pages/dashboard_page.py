@@ -5,6 +5,8 @@ from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget
 
 
 class DashboardPage(QWidget):
+    """Dashboard page."""
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -13,20 +15,18 @@ class DashboardPage(QWidget):
 
         title = QLabel("Dashboard")
         title.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        title.setStyleSheet("""
-            font-size:30px;
-            font-weight:bold;
-        """)
+        title.setStyleSheet(
+            """
+            font-size: 28px;
+            font-weight: bold;
+            """
+        )
 
         subtitle = QLabel(
             "Welcome to Android Control Center.\n\n"
-            "Connect an Android device to begin."
+            "Connect an Android device to get started."
         )
-
-        subtitle.setStyleSheet("""
-            font-size:15px;
-            color:#bbbbbb;
-        """)
+        subtitle.setStyleSheet("font-size: 14px; color: #bdbdbd;")
 
         layout.addWidget(title)
         layout.addSpacing(15)

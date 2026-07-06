@@ -5,26 +5,32 @@ from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget
 
 
 class DevicesPage(QWidget):
-    """Device information page."""
+    """Devices page."""
 
     def __init__(self) -> None:
         super().__init__()
 
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(40, 40, 40, 40)
 
         title = QLabel("Devices")
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setStyleSheet("""
-            font-size:24px;
-            font-weight:bold;
-        """)
+        title.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        title.setStyleSheet(
+            """
+            font-size: 28px;
+            font-weight: bold;
+            """
+        )
 
         info = QLabel(
             "No Android device connected."
         )
-        info.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        layout.addStretch()
+        info.setStyleSheet(
+            "font-size:14px; color:#bdbdbd;"
+        )
+
         layout.addWidget(title)
+        layout.addSpacing(15)
         layout.addWidget(info)
         layout.addStretch()
