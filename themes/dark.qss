@@ -1,0 +1,19 @@
+QMainWindow {
+    background-color: #1E1E1E;
+}
+
+QWidget {
+    background-color: #1E1E1E;
+    color: white;
+    font-size: 10pt;
+}
+
+QStatusBar {
+    background: #252526;
+}
+
+QToolBar {
+    background: #252526;
+    spacing: 6px;
+    border: none;
+}
