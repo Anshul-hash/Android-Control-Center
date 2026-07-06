@@ -5,12 +5,14 @@ from PySide6.QtWidgets import (
     QMainWindow,
     QStackedWidget,
     QStatusBar,
+    QVBoxLayout,
     QWidget,
 )
 
 from acc.ui.pages.dashboard_page import DashboardPage
 from acc.ui.pages.devices_page import DevicesPage
-from acc.ui.widgets.sidebar import Sidebar, Page
+from acc.ui.widgets.header import Header
+from acc.ui.widgets.sidebar import Sidebar
 
 
 class MainWindow(QMainWindow):
@@ -42,15 +44,23 @@ class MainWindow(QMainWindow):
         # ---------- Connect Sidebar ----------
         self.sidebar.page_changed.connect(self.change_page)
 
-        # ---------- Main Layout ----------
+        # ---------- Widgets ----------
+        self.header = Header()
+
         central = QWidget()
+        main_layout = QHBoxLayout(central)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
 
-        layout = QHBoxLayout(central)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
+        content_layout = QVBoxLayout()
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(0)
 
-        layout.addWidget(self.sidebar)
-        layout.addWidget(self.pages)
+        content_layout.addWidget(self.header)
+        content_layout.addWidget(self.pages)
+
+        main_layout.addWidget(self.sidebar)
+        main_layout.addLayout(content_layout)
 
         self.setCentralWidget(central)
 
