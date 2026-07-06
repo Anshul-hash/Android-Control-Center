@@ -3,11 +3,12 @@ from __future__ import annotations
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QMainWindow,
-    QWidget,
     QStackedWidget,
+    QStatusBar,
+    QWidget,
 )
 
-from acc.ui.pages.home_page import HomePage
+from acc.ui.pages.dashboard_page import DashboardPage
 from acc.ui.pages.devices_page import DevicesPage
 from acc.ui.widgets.sidebar import Sidebar
 
@@ -18,32 +19,31 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Android Control Center")
-        self.resize(1400, 850)
+        self.resize(1450, 900)
 
         self.sidebar = Sidebar()
 
         self.stack = QStackedWidget()
 
-        self.home = HomePage()
+        self.dashboard = DashboardPage()
         self.devices = DevicesPage()
 
-        self.stack.addWidget(self.home)
+        self.stack.addWidget(self.dashboard)
         self.stack.addWidget(self.devices)
 
-        self.sidebar.page_selected.connect(self.change_page)
+        self.sidebar.page_changed.connect(self.stack.setCurrentIndex)
 
         central = QWidget()
 
         layout = QHBoxLayout(central)
         layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
 
         layout.addWidget(self.sidebar)
         layout.addWidget(self.stack)
 
         self.setCentralWidget(central)
 
-        self.statusBar().showMessage("Ready")
-
-    def change_page(self, index: int) -> None:
-        if index < self.stack.count():
-            self.stack.setCurrentIndex(index)
+        status = QStatusBar()
+        status.showMessage("Ready")
+        self.setStatusBar(status)

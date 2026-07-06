@@ -1,25 +1,19 @@
 from __future__ import annotations
 
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import (
-    QListWidget,
-    QListWidgetItem,
-    QVBoxLayout,
-    QWidget,
-)
+from PySide6.QtCore import Signal
+from PySide6.QtWidgets import QListWidget, QListWidgetItem, QVBoxLayout, QWidget
 
 
 class Sidebar(QWidget):
-    """Application navigation sidebar."""
 
-    page_selected = Signal(int)
+    page_changed = Signal(int)
 
     def __init__(self) -> None:
         super().__init__()
 
         self.setFixedWidth(220)
 
-        self.list = QListWidget()
+        self.menu = QListWidget()
 
         pages = [
             "🏠 Dashboard",
@@ -33,11 +27,12 @@ class Sidebar(QWidget):
         ]
 
         for page in pages:
-            QListWidgetItem(page, self.list)
+            QListWidgetItem(page, self.menu)
 
-        self.list.setCurrentRow(0)
-        self.list.currentRowChanged.connect(self.page_selected.emit)
+        self.menu.currentRowChanged.connect(self.page_changed)
+
+        self.menu.setCurrentRow(0)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(8, 8, 8, 8)
-        layout.addWidget(self.list)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.menu)
